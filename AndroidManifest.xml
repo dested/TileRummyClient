@@ -11,7 +11,7 @@
         </activity>
         <activity android:name=".LampLight.GameRoom" android:screenOrientation="unspecified" android:theme="@android:style/Theme.NoTitleBar"/>
         <service android:name="com.TileRummy.Service.MultiRunner"/>
-        <activity android:name="RummyGame" android:screenOrientation="unspecified" android:theme="@android:style/Theme.NoTitleBar">            </activity>
+        <activity android:name="RummyGame" android:screenOrientation="unspecified" android:theme="@android:style/Theme.NoTitleBar" >            </activity>
         <service android:name=".LampLight.LampService"/>
     </application>
 </manifest>

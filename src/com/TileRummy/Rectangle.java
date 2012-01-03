@@ -25,6 +25,13 @@ public class Rectangle {
         Height=tileArea.Height;
     }
 
+    public Rectangle(Point location, float width, float height) {
+        X=location.X;
+        Y=location.Y;
+        Width=width;
+        Height=height;
+    }
+
     public boolean Collides(float x2, float y2) {
         return (X < x2 && X + Width > x2 && Y < y2 && Y + Height > y2);
 

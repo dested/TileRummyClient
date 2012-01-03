@@ -150,4 +150,31 @@ public class Point implements Serializable {
 
 
     }
+
+    public Rectangle toRectangle( float width, float height) {
+        return new Rectangle(this,width, height);
+    }
+
+    public void Limit(float v) {
+        if(X ==0 ){
+
+        }   else
+        if (X > v) {
+            X = v;
+        }
+        else if (X < -v) {
+            X = -v;
+        }
+
+
+        if(Y ==0 ){
+
+        }   else
+        if (Y > v) {
+            Y = v;
+        }
+        else if (Y < -v) {
+            Y = -v;
+        }
+    }
 }

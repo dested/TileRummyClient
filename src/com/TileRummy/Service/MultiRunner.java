@@ -7,11 +7,9 @@ import MessageParseJunk.RummyGameGameRoomMessage;
 import MessageParseJunk.WaitingRoomMessage;
 import android.content.Context;
 import android.os.Vibrator;
+import android.view.SurfaceHolder;
+import com.TileRummy.*;
 import com.TileRummy.LampLight.PaintBucket;
-import com.TileRummy.RummyGameLogic;
-import com.TileRummy.RummySet;
-import com.TileRummy.RummyTile;
-import com.TileRummy.TileColor;
 import org.jivesoftware.smack.ConnectionConfiguration;
 import org.jivesoftware.smack.PacketListener;
 import org.jivesoftware.smack.SmackConfiguration;
@@ -55,27 +53,11 @@ public class MultiRunner extends Service {
     Random random = new Random();
     RummyGameLogic rgl;
 
-    public RummyGameLogic getRummyGameLogic(PaintBucket bucket,Context mcontext) {
+    public RummyGameLogic getRummyGameLogic(Context mcontext, SurfaceHolder msurfaceholder, MultiRunner runner) {
 
         if (rgl == null) {
-            rgl = new RummyGameLogic(bucket, (Vibrator) getSystemService(Context.VIBRATOR_SERVICE),mcontext);
+            rgl = new RummyGameLogic((Vibrator) getSystemService(Context.VIBRATOR_SERVICE), mcontext, msurfaceholder, runner);
 
-            RummySet set = new RummySet();
-            rgl.addSet(set);
-            for (int i = 0; i < 20; i++) {
-                if (random.nextInt(100)<75) {
-                    RummySet s = rgl.Sets.get(rgl.Sets.size() - 1);
-                    s.addTile(new RummyTile(random.nextInt(13) + 1, TileColor.Red));
-
-                } else {
-
-                    RummySet setc = new RummySet();
-                    rgl.addSet(setc);
-                    setc.addTile(new RummyTile(random.nextInt(13) + 1, TileColor.Red));
-                    setc.setPosition(random.nextInt(250), random.nextInt(250));
-                }
-
-            }
         }
         return rgl;
     }
@@ -117,6 +99,7 @@ public class MultiRunner extends Service {
         // We want this service to continue running until it is explicitly
         // stopped, so return sticky.
         return START_STICKY;
+
     }
 
     @Override
@@ -209,6 +192,7 @@ public class MultiRunner extends Service {
                         xmpp.connect();
                         update("Connected");
                     }
+
                     update("Logging In");
                     xmpp.login(username, password);
                     update("Logged In");
@@ -468,26 +452,58 @@ for (FriendsPlaying f : rummyGameGame.friends) {
                 rummyGameRoom.addMessageListener(rummyGameMessageListener = new PacketListener() {
                     @Override
                     public void processPacket(Packet message) {
-
+                        if (message.getFrom().toLowerCase().endsWith(GameInformation.UserName))
+                            return;
                         String d = ((Message) message).getBody();
 
                         RummyGameGameRoomMessage gm = RummyGameGameRoomMessage.Parse(d);
 
                         switch (gm.Type) {
-                            case RummyPlayerTiles:
-                                rgl.setPlayerTiles(gm.TileData);
-                                //  rummyGameGame.theIndexes = gm.RummyGameData;
-                                // rummyGameGame.RummyGameBuilder = new RummyGameBuilder(rummyGameGame.theIndexes);
+                            case PlayerTiles:
+                                if(rgl.playerTiles==null){rgl.setPlayerTiles(gm.TileData);}
+
+                                rgl.playerInformation = new ArrayList<PlayerInformation>();
+
+                                for (String name : gm.PlayerNames) {
+                                    PlayerInformation pi;
+                                    rgl.playerInformation.add(pi = new PlayerInformation(rgl, name));
+                                }
 
                                 break;
-                            case RummyGameMove:
-                                /*for (FriendsPlaying friend : rummyGameGame.friends) {
-                                    if (friend.Name.equals(message.getFrom())) {
-
-                                        friend.MovementPoints.add(gm.point);
+                            case AddSetToPlayer:
+                                for (PlayerInformation infs : rgl.playerInformation) {
+                                    if (infs.name.equals(gm.PlayerName)) {
+                                        infs.addSet(new RummySet());
                                     }
-                                } */
+                                }
                                 break;
+                            case AddTileToSet:
+                                for (PlayerInformation infs : rgl.playerInformation) {
+                                    if (infs.name.equals(gm.PlayerName)) {
+                                        infs.Sets.get(gm.SetIndex).addTile(new RummyTile(gm.TileData[0].Number, TileColor.getColor(gm.TileData[0].Color)));
+                                    }
+                                }
+                                break;
+                            case SplitSet:
+                                for (PlayerInformation infs : rgl.playerInformation) {
+                                    if (infs.name.equals(gm.PlayerName)) {
+                                        RummySet set = infs.Sets.get(gm.SetIndex);
+
+                                        RummySet newSet = new RummySet();
+                                        set.Player.addSet(gm.SetIndex + 1, newSet);
+
+                                        for (int c = set.tiles.size() - 1; c >= gm.MoveToSetIndex; c--) {
+                                            RummyTile tile = set.tiles.get(c);
+                                            set.removeTile(tile);
+                                            newSet.addTile(tile);
+                                        }
+                                    }
+                                }
+                                break;
+                            case MoveTile:
+
+                                break;
+
                             case GameStarted:
 
                                 startGame();
@@ -498,6 +514,10 @@ for (FriendsPlaying f : rummyGameGame.friends) {
                                 finish();
                                 break;
 
+                            case Ping:
+                                break;
+                            case Leave:
+                                break;
                         }
 
                     }

@@ -8,6 +8,8 @@ import android.content.ServiceConnection;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.os.Vibrator;
+import android.view.Window;
+import android.view.WindowManager;
 import com.TileRummy.Service.Messager;
 import com.TileRummy.Service.MultiRunner;
 
@@ -58,6 +60,8 @@ public class RummyGame extends Activity {
 
         super.onCreate(savedInstanceState);
 
+        this.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN)                         ;
 
         mConnection = new ServiceConnection() {
             @Override
@@ -80,7 +84,7 @@ public class RummyGame extends Activity {
                 if (!mBoundService.inRummyGame()) {
                     mBoundService.JoinRummyGameGameRoom(RoomToJoin);
                 }
-                mLunarThread.logic = mBoundService.getRummyGameLogic(mLunarThread.Bucket,mLunarView.mContext);
+                mLunarThread.logic = mBoundService.getRummyGameLogic(mLunarView.mContext,mLunarView.thread.mSurfaceHolder,mLunarView.runner);
             }
 
             @Override

@@ -19,6 +19,7 @@ public class PaintBucket {
 		Paint ps;
 
 		hs.put(n, ps = new Paint());
+        ps.setDither(true);
 		return ps;
 	}
 }

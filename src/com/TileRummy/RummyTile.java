@@ -1,5 +1,6 @@
 package com.TileRummy;
 
+import MessageParseJunk.TileData;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -11,11 +12,14 @@ public class RummyTile {
     private TileColor color;
     public RummySet Set;
     private int number;
-    public float Width = 63;
-    public float Height = 35;
+    public static float Width = 63;
+    public static float Height = 35;
+    public float X;
+    public float Y;
     public PaintBucket Bucket;
     public boolean highlighted;
     public boolean longPressed;
+    public int dummy; 
 
     public RummyTile(int i, TileColor red) {
 
@@ -23,18 +27,31 @@ public class RummyTile {
         color = red;
     }
 
+    public RummyTile(boolean b) {       dummy=1;
+    }
+
     public void setBucket(PaintBucket bucket) {
 
         Bucket = bucket;
     }
 
-    public void draw(float x, float y, Canvas canvas) {
+    public void setPosition(float x, float y) {
+    X=x;
+        Y=y;
+    }
+    public void draw( Canvas canvas) {
 
         RectF tileLoc;
 
-        tileLoc = new Rectangle(x, y, Width, Height).toRectF();
-
         Paint paint;
+        tileLoc = new Rectangle(X, Y, Width, Height).toRectF();
+        if(dummy==1){
+            paint=Bucket.GetPaint("outerTileLongPressed");
+
+            canvas.drawRoundRect(tileLoc, 3, 3, paint);
+            return;
+        }       else if (dummy==2)return ;
+
 
          if (highlighted) {
             if (longPressed) {
@@ -53,7 +70,23 @@ public class RummyTile {
         canvas.drawRoundRect(tileLoc, 3, 3, paint);
         canvas.drawRoundRect(tileLoc, 3, 3, Bucket.GetPaint("innerTile"));
 
-        canvas.drawText(Integer.toString(number), tileLoc.left + Width / 9f, tileLoc.top + Height * .71f, Bucket.GetPaint("tileText1"));
+        Paint colorPaint=Bucket.GetPaint("tileText1");
+        switch (color) {
+            case Red:
+                colorPaint=Bucket.GetPaint("tileText1");
+                break;
+            case Blue:
+                colorPaint=Bucket.GetPaint("tileText2");
+                break;
+            case Green:
+                colorPaint=Bucket.GetPaint("tileText3");
+                break;
+            case Purple:
+                colorPaint=Bucket.GetPaint("tileText4");
+                break;
+        }
+
+        canvas.drawText(Integer.toString(number), tileLoc.left + Width / 9f, tileLoc.top + Height * .71f, colorPaint);
 
         canvas.drawCircle(tileLoc.left + Width * .75f, tileLoc.top + Height * .5f, Height / 3, highlighted ? Bucket.GetPaint("tileCircleHighlight") : Bucket.GetPaint("tileCircle"));
     }
@@ -65,16 +98,29 @@ public class RummyTile {
         RummySet st = new RummySet();
         st.X=x;
         st.Y=y;
-
-
-
+        st.setBucket(this.Bucket);
         longPressed = true;
         this.Set.Dragging = false;
-        this.Set.tiles.remove(this);
-
-        lgc.addSet(st);
-                        st.Dragging = true;
+        this.Set.removeTile(this);
+        st.Dragging = true;
         lgc.draggingSet=st;
         st.addTile(this);
+    }
+
+    public boolean collides(float xx, float yy) {
+        return new Rectangle(X,Y,Width,Height).Collides(xx,yy);
+    }
+
+    public boolean collides(Point mousePoint) {
+        
+        return collides(mousePoint.X, mousePoint.Y);
+    }
+
+    public void longPress(Point mousePoint) {
+        longPress(mousePoint.X, mousePoint.Y);
+    }
+
+    public TileData getTileData() {
+        return new TileData(number, color.index);
     }
 }
