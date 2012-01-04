@@ -2,10 +2,12 @@ package com.TileRummy;
 
 import MessageParseJunk.TileData;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.RectF;
 import com.TileRummy.LampLight.PaintBucket;
+import com.TileRummy.Utils.Point;
+import com.TileRummy.Utils.Rectangle;
+import com.TileRummy.Utils.TileColor;
 
 
 public class RummyTile {
@@ -32,11 +34,12 @@ public class RummyTile {
         Bucket = bucket;
     }
 
-    public void setPosition(float x, float y) {
-    X=x;
-        Y=y;
+    public void setPosition(Point p) {
+        X = p.X;
+        Y = p.Y;
     }
-    public void draw( Canvas canvas) {
+
+    public void draw(Canvas canvas) {
 
         RectF tileLoc;
 
@@ -44,7 +47,7 @@ public class RummyTile {
         tileLoc = new Rectangle(X, Y, Width, Height).toRectF();
 
 
-         if (highlighted) {
+        if (highlighted) {
             if (longPressed) {
                 paint = Bucket.GetPaint("outerTileLongPressed");
             } else {
@@ -61,19 +64,19 @@ public class RummyTile {
         canvas.drawRoundRect(tileLoc, 3, 3, paint);
         canvas.drawRoundRect(tileLoc, 3, 3, Bucket.GetPaint("innerTile"));
 
-        Paint colorPaint=Bucket.GetPaint("tileText1");
+        Paint colorPaint = Bucket.GetPaint("tileText1");
         switch (color) {
             case Red:
-                colorPaint=Bucket.GetPaint("tileText1");
+                colorPaint = Bucket.GetPaint("tileText1");
                 break;
             case Blue:
-                colorPaint=Bucket.GetPaint("tileText2");
+                colorPaint = Bucket.GetPaint("tileText2");
                 break;
             case Green:
-                colorPaint=Bucket.GetPaint("tileText3");
+                colorPaint = Bucket.GetPaint("tileText3");
                 break;
             case Purple:
-                colorPaint=Bucket.GetPaint("tileText4");
+                colorPaint = Bucket.GetPaint("tileText4");
                 break;
         }
 
@@ -87,23 +90,23 @@ public class RummyTile {
 
 
         RummySet st = new RummySet();
-        st.X=x;
-        st.Y=y;
+        st.X = x;
+        st.Y = y;
         st.setBucket(this.Bucket);
         longPressed = true;
         this.Set.Dragging = false;
         this.Set.removeTile(this);
         st.Dragging = true;
-        lgc.draggingSet=st;
+        lgc.draggingSet = st;
         st.addTile(this);
     }
 
     public boolean collides(float xx, float yy) {
-        return new Rectangle(X,Y,Width,Height).Collides(xx,yy);
+        return new Rectangle(X, Y, Width, Height).Collides(xx, yy);
     }
 
     public boolean collides(Point mousePoint) {
-        
+
         return collides(mousePoint.X, mousePoint.Y);
     }
 

@@ -2,9 +2,9 @@ package com.TileRummy;
 
 
 import android.graphics.Canvas;
-import android.graphics.Paint;
-import android.util.FloatMath;
 import com.TileRummy.LampLight.PaintBucket;
+import com.TileRummy.Utils.Point;
+import com.TileRummy.Utils.Rectangle;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -21,7 +21,7 @@ public class RummySet {
     public boolean Dragging;
     public PlayerInformation Player;
     private float height;
-    public int EmptyTileIndex=-1;
+    public int EmptyTileIndex = -1;
 
     public RummySet() {
     }
@@ -31,9 +31,9 @@ public class RummySet {
         Bucket = bucket;
     }
 
-    public void setPosition(float x, float y) {
-        X = x;
-        Y = y;
+    public void setPosition(Point p) {
+        X =p.X;
+        Y = p.Y;
     }
 
     public void addTile(int index, RummyTile tile) {
@@ -60,41 +60,48 @@ public class RummySet {
 
         int wrap = (int) (width / (RummyTile.Width + 7));
         float emptyXOffset = 0;
-        boolean skip=false;
+        boolean skip = false;
         for (int i = 0; i < tiles.size(); i++) {
 
-            if (i % wrap == 0 && emptyXOffset > 0) emptyXOffset = 0;
+            if (!skip && i % wrap == 0 && emptyXOffset > 0) emptyXOffset = 0;
             float x = (RummyTile.Width + 7) * (i % wrap) + this.X + emptyXOffset;
             float y = (RummyTile.Height + 7) * ((float) Math.floor(i / wrap)) + this.Y;
 
 
-            if (!skip && EmptyTileIndex == i ) {
+            if (!skip && EmptyTileIndex == i) {
                 canvas.drawRoundRect(new Rectangle(x, y, 32, RummyTile.Height).toRectF(), 3, 3, Bucket.GetPaint("outerTileLongPressed"));
                 emptyXOffset += 45;
-                skip=true;
+                skip = true;
                 i--;
 
                 continue;
             }
-
-            tiles.get(i).setPosition(x, y);
+            skip = false;
+            tiles.get(i).setPosition(new Point(x,y));
             tiles.get(i).draw(canvas);
+
+        }
+        if (EmptyTileIndex == tiles.size()) {
+
+            float x = (RummyTile.Width + 7) * (tiles.size() % wrap) + this.X + emptyXOffset;
+            float y = (RummyTile.Height + 7) * ((float) Math.floor(tiles.size() / wrap)) + this.Y;
+            canvas.drawRoundRect(new Rectangle(x, y, 32, RummyTile.Height).toRectF(), 3, 3, Bucket.GetPaint("outerTileLongPressed"));
 
         }
         return (RummyTile.Height + 7) * (((float) Math.floor((tiles.size() - 1) / wrap)) + 1) + 7;
     }
 
-    public boolean collides(float xx, float yy) {
-        return collideWithTile(xx, yy) != null;
+    public boolean collides(Point p) {
+        return collideWithTile(p) != null;
     }
 
-    public RummyTile collideWithTile(float xx, float yy) {
+    public RummyTile collideWithTile(Point p) { 
         List<Double> distances = new ArrayList<Double>();
         if (tiles.size() == 0) return null;
 
         for (RummyTile tile : tiles) {
 
-            distances.add(Math.sqrt(Math.pow((tile.X + RummyTile.Width / 2) - xx, 2) + Math.pow((tile.Y + RummyTile.Height / 2) - yy, 2)));
+            distances.add(Math.sqrt(Math.pow((tile.X + RummyTile.Width / 2) - p.X, 2) + Math.pow((tile.Y + RummyTile.Height / 2) - p.Y, 2)));
             //if (tile.collides(xx, yy)) {
             //    return tile;
             //}
@@ -102,28 +109,11 @@ public class RummySet {
         List<Double> distances2 = new ArrayList<Double>(distances);
         Collections.sort(distances2);
         RummyTile returnValue;
-        if (distances2.get(0) > 65)
-            returnValue = null;
+        if (distances2.get(0) > 30)
+             returnValue = null;
         else
             returnValue = tiles.get(distances.indexOf(distances2.get(0)));
         return returnValue;
-    }
-
-    public void beginDragging(float cx, float cy) {
-        draggingOffset = new Point(cx - this.X, cy - this.Y);
-
-        float x = this.X;
-        float y = this.Y;
-        for (int i = 0; i < tiles.size(); i++) {
-            float w = tiles.get(i).Width * 1;
-            float h = tiles.get(i).Height * 1;
-            if (cx > x && cx < x + w && cy > y && cy < y + h) {
-                tiles.get(i).highlighted = true;
-            }
-            x += w;
-            // y += h;
-
-        }
     }
 
     public void draggingAround(float x, float y) {
@@ -133,7 +123,7 @@ public class RummySet {
         if (draggingOffset == null) {
             draggingOffset = new Point(0, 0);
         }
-        setPosition(x - draggingOffset.X, y - draggingOffset.Y);
+        setPosition(new Point(x - draggingOffset.X, y - draggingOffset.Y));
     }
 
     public void endDragging() {
@@ -147,12 +137,17 @@ public class RummySet {
     }
 
     public void dropTile(RummyTile tile, Point pos) {
-        RummyTile tl = collideWithTile(pos.X, pos.Y);
+        RummyTile tl = collideWithTile(pos);
         if (tl != null) {
+            int index = tiles.indexOf(tl);
+
+            if (pos.X > tl.X + RummyTile.Width / 2)
+                index++;
             if (tile == null) {
-                EmptyTileIndex = tiles.indexOf(tl);
+
+                EmptyTileIndex = index;
             } else
-                addTile(tiles.indexOf(tl), tile);
+                addTile(index, tile);
             return;
         }
 
@@ -174,9 +169,7 @@ public class RummySet {
         return (RummyTile.Height + 7) * (1 + ((float) Math.floor((tiles.size() - 1) / wrap)));
     }
 
-    public boolean collides(Point itemPosition) {
-        return collides(itemPosition.X, itemPosition.Y);
-    }
+
 
     public void longPress(Point mousePoint) {
         for (RummyTile tile : tiles) {

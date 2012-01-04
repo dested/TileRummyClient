@@ -12,7 +12,7 @@ public class RummyGameGameRoomMessage {
 
 
     public enum GameRoomMessageType {
-        PlayerTiles, AddSetToPlayer, AddTileToSet, SplitSet, MoveTile, GameStarted, GameFinish, Ping, Leave
+        PlayerTiles, AddSetToPlayer, AddTileToSet, SplitSet, MoveTile,AddTileToPlayer, GameStarted, GameFinish, Ping, GiveMeTile, Leave
     }
 
     public TileData[] TileData;
@@ -60,15 +60,25 @@ public class RummyGameGameRoomMessage {
                 t.MoveToSetIndex = Integer.parseInt(d[5]);
                 break;
             case 5:
-                t.Type = GameRoomMessageType.GameStarted;
+                t.Type = GameRoomMessageType.AddTileToPlayer;
+                t.TileData = parseRummyTiles(d[1]);
+                t.PlayerName = d[2];
                 break;
             case 6:
-                t.Type = GameRoomMessageType.GameFinish;
+                t.Type = GameRoomMessageType.GiveMeTile;
+                t.PlayerName = d[1];
                 break;
+
             case 7:
-                t.Type = GameRoomMessageType.Leave;
+                t.Type = GameRoomMessageType.GameStarted;
                 break;
             case 8:
+                t.Type = GameRoomMessageType.GameFinish;
+                break;
+            case 9:
+                t.Type = GameRoomMessageType.Leave;
+                break;
+            case 10:
                 t.Type = GameRoomMessageType.Ping;
                 break;
         }
@@ -100,17 +110,23 @@ public class RummyGameGameRoomMessage {
             case MoveTile:
                 d = String.format("4|%s|%s|%d|%s|%d", makeRummyTiles(TileData), PlayerName, SetIndex, MoveToPlayerName, MoveToSetIndex);
                 break;
+            case AddTileToPlayer:
+                d = String.format("5|%s|%s", makeRummyTiles(TileData), PlayerName);
+                break;
+            case GiveMeTile:
+                d = String.format("6|%s",  PlayerName);
+                break;
             case GameStarted:
-                d = "5|";
-                break;
-            case GameFinish:
-                d = "6|";
-                break;
-            case Leave:
                 d = "7|";
                 break;
-            case Ping:
+            case GameFinish:
+                d = "8|";
+                break;
+            case Leave:
                 d = "9|";
+                break;
+            case Ping:
+                d = "10|";
                 break;
 
         }
@@ -148,6 +164,11 @@ public class RummyGameGameRoomMessage {
     public RummyGameGameRoomMessage(GameRoomMessageType t, TileData[] p) {
         Type = t;
         TileData = p;
+    }
+    public RummyGameGameRoomMessage(GameRoomMessageType t, TileData[] p,String playerName) {
+        Type = t;
+        TileData = p;
+        PlayerName = playerName;
     }
 
     public RummyGameGameRoomMessage(GameRoomMessageType t, String playerName) {

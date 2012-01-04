@@ -190,20 +190,20 @@ class RummyGameView extends SurfaceView implements SurfaceHolder.Callback {
         public void run() {
             while (mRun) {
                 Canvas c = null;
-              //  try {
+                try {
                     c = mSurfaceHolder.lockCanvas(null);
                     synchronized (mSurfaceHolder) {
                         updateEngine();
                         doDraw(c);
                     }
-              /*  } catch (Exception ee) {
-                    Log.d(ee.toString(), "");
+                } catch (Exception ee) {
+                    Log.d(ee.toString(), Log.getStackTraceString(ee));
 
                 } finally {
                     if (c != null) {
                         mSurfaceHolder.unlockCanvasAndPost(c);
                     }
-                }     */
+                }
             }
         }
 

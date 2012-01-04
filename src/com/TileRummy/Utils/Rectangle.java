@@ -1,4 +1,4 @@
-package com.TileRummy;
+package com.TileRummy.Utils;
 
 
 import android.graphics.Rect;

@@ -1,18 +1,9 @@
-package com.TileRummy;
-
-import org.xbill.DNS.Lookup;
+package com.TileRummy.Utils;
 
 import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * Created by IntelliJ IDEA.
- * User: Dested
- * Date: 1/1/12
- * Time: 5:25 PM
- * To change this template use File | Settings | File Templates.
- */
 public enum TileColor {
     Red(0),Blue(1),Green(2),Purple(3);
                 int index;

@@ -1,7 +1,7 @@
 package Helper;
 
 
-import com.TileRummy.Point;
+import com.TileRummy.Utils.Point;
 
 public class Rational {
     public int numerator;

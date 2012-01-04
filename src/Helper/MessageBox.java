@@ -1,7 +1,7 @@
 package Helper;
 
 
-import com.TileRummy.Rectangle;
+import com.TileRummy.Utils.Rectangle;
 
 public class MessageBox {
 	public int x;

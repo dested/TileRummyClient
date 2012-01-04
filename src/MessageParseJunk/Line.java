@@ -1,6 +1,6 @@
 package MessageParseJunk;
 
-import com.TileRummy.Point;
+import com.TileRummy.Utils.Point;
 
 public class Line {
 	public Point Start;

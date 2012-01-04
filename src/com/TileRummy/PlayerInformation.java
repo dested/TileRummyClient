@@ -1,17 +1,16 @@
 package com.TileRummy;
 
 import android.graphics.Canvas;
-import android.view.MotionEvent;
+import com.TileRummy.Utils.Point;
+import com.TileRummy.Utils.Rectangle;
 
 import java.util.ArrayList;
-import java.util.Set;
-import java.util.logging.XMLFormatter;
 
 public class PlayerInformation {
     public ArrayList<RummySet> Sets = new ArrayList<RummySet>();
     private RummyGameLogic logic;
     private Point Location;
-    private float Height;
+    float Height;
     public float Width;
     public String name;
     public boolean EmptySet;
@@ -45,11 +44,11 @@ public class PlayerInformation {
     public void draw(Canvas canvas) {
         Width = (RummyTile.Width + 7) * 6 + 25;
 
-        int curY = 0;
+        float curY = Location.Y;
         canvas.drawText(name, Location.X + (Width / 4), curY, this.logic.Bucket.GetPaint("nameText"));
         curY += 7;
         for (RummySet Set : Sets) {
-            Set.setPosition(Location.X, curY);
+            Set.setPosition(new Point(Location.X, curY));
             curY += Set.draw(Width, canvas) + 5;
         }
         if (EmptySet) {

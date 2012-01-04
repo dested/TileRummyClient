@@ -4,12 +4,13 @@ import java.util.*;
 
 import Helper.Helping;
 import MessageParseJunk.RummyGameGameRoomMessage;
+import MessageParseJunk.TileData;
 import MessageParseJunk.WaitingRoomMessage;
 import android.content.Context;
 import android.os.Vibrator;
 import android.view.SurfaceHolder;
 import com.TileRummy.*;
-import com.TileRummy.LampLight.PaintBucket;
+import com.TileRummy.Utils.TileColor;
 import org.jivesoftware.smack.ConnectionConfiguration;
 import org.jivesoftware.smack.PacketListener;
 import org.jivesoftware.smack.SmackConfiguration;
@@ -460,7 +461,9 @@ for (FriendsPlaying f : rummyGameGame.friends) {
 
                         switch (gm.Type) {
                             case PlayerTiles:
-                                if(rgl.playerTiles==null){rgl.setPlayerTiles(gm.TileData);}
+                                if (rgl.playerTiles == null) {
+                                    rgl.setPlayerTiles(gm.TileData);
+                                }
 
                                 rgl.playerInformation = new ArrayList<PlayerInformation>();
 
@@ -503,7 +506,15 @@ for (FriendsPlaying f : rummyGameGame.friends) {
                             case MoveTile:
 
                                 break;
-
+                            case AddTileToPlayer:
+                                if (!gm.PlayerName.equals(GameInformation.UserName)) {
+                                    return;
+                                }
+                                if (rgl.playerTiles != null) {
+                                    TileData pt = gm.TileData[0];
+                                    rgl.playerTiles.addTile(new RummyTile(pt.Number, TileColor.getColor(pt.Color)));
+                                }
+                                break;
                             case GameStarted:
 
                                 startGame();

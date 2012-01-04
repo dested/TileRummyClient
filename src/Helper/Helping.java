@@ -1,9 +1,8 @@
 package Helper;
 
-import android.graphics.Rect;
 import android.graphics.RectF;
 import android.util.Pair;
-import com.TileRummy.Point;
+import com.TileRummy.Utils.Point;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;

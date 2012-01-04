@@ -8,13 +8,13 @@ import android.os.Vibrator;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import com.TileRummy.LampLight.PaintBucket;
+import com.TileRummy.Service.GameInformation;
 import com.TileRummy.Service.MultiRunner;
+import com.TileRummy.Utils.*;
 import org.jivesoftware.smack.XMPPException;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Timer;
-import java.util.TimerTask;
 
 
 public class RummyGameLogic {
@@ -22,10 +22,10 @@ public class RummyGameLogic {
 
     public ArrayList<PlayerInformation> playerInformation = new ArrayList<PlayerInformation>();
 
-
+    private GameMenu menu;
     private Vibrator vib;
     private ClickMode clickMode;
-    Point panning = new Point(50, 50);
+    com.TileRummy.Utils.Point panning = new com.TileRummy.Utils.Point(50, 50);
     public float scaleFactor = 1f;
 
     int mCanvasHeight = 1;
@@ -44,8 +44,20 @@ public class RummyGameLogic {
 
     public PaintBucket Bucket = new PaintBucket();
 
-    public RummyGameLogic(Vibrator vib, Context mcontext, SurfaceHolder mSurfaceHolder, MultiRunner runner) {
+    public RummyGameLogic(Vibrator vib, final Context mcontext, SurfaceHolder mSurfaceHolder, final MultiRunner runner) {
 
+        menu = new GameMenu(this);
+        menu.addButton(new GameMenuButton("Take Tile", new com.TileRummy.Utils.Point(15, 35),"buttonPaint", new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    runner.rummyGameRoom.sendMessage(new RummyGameGameRoomMessage(RummyGameGameRoomMessage.GameRoomMessageType.GiveMeTile, GameInformation.UserName).GenerateMessage());
+                } catch (XMPPException e) {
+                    e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+                }
+
+            }
+        }));
         this.vib = vib;
         this.mContext = mcontext;
         this.mSurfaceHolder = mSurfaceHolder;
@@ -63,6 +75,24 @@ public class RummyGameLogic {
         p.setStrokeWidth(6);
         p.setStyle(Paint.Style.STROKE);
         p.setShadowLayer(0.5f, 1, 1, Color.rgb(255, 212, 84));
+
+
+        p = Bucket.AddPaint("menuBackground");
+        p.setARGB(255, 11, 208, 82);
+        p.setStrokeWidth(6);
+        p.setStyle(Paint.Style.FILL_AND_STROKE);
+
+        p = Bucket.AddPaint("buttonPaint");
+        p.setARGB(255, 255, 208, 82);
+        p.setStrokeWidth(6);
+        p.setStyle(Paint.Style.FILL_AND_STROKE);
+
+        p = Bucket.AddPaint("buttonText");
+        p.setARGB(255, 0, 127, 127);
+        p.setAntiAlias(true);
+        p.setTextSize(17);
+        p.setTypeface(Typeface.DEFAULT_BOLD);
+
 
 
         p = Bucket.AddPaint("outerTileHighlightSet");
@@ -105,6 +135,7 @@ public class RummyGameLogic {
         p.setTextSize(24);
         p.setTypeface(Typeface.DEFAULT_BOLD);
         p.setShadowLayer(0.5f, 1, 1, Color.rgb(209, 0, 0));
+
         p = Bucket.AddPaint("tileText2");
         p.setARGB(255, 0, 127, 127);
         p.setAntiAlias(true);
@@ -160,22 +191,35 @@ public class RummyGameLogic {
 
             return;
         }
-        Point c = new Point(Math.abs(mouseVector.X) * .6f, Math.abs(mouseVector.Y) * .6f);
-        panning.Offset(Point.Min(mouseVector, c));
+        com.TileRummy.Utils.Point c = new com.TileRummy.Utils.Point(Math.abs(mouseVector.X) * .6f, Math.abs(mouseVector.Y) * .6f);
+        panning.Offset(com.TileRummy.Utils.Point.Min(mouseVector, c));
         mouseVector.OffsetToZero(c);
         canvas.save();
 
 
         canvas.save();
         canvas.scale(scaleFactor, scaleFactor);
-        canvas.translate(panning.X, panning.Y);
+        canvas.translate(panning.X, panning.Y );
 
         float playerOffset = 0;
+        float minHeight = 0;
         for (PlayerInformation inf : playerInformation) {
             inf.setPosition(playerOffset, 25f);
             inf.draw(canvas);
+            if (minHeight < inf.Height) {
+                minHeight = inf.Height;
+            }
             playerOffset += inf.Width;
         }
+
+        if (panning.X < -15)
+            panning.X = -15;
+        if (panning.Y < -15)
+            panning.Y = -15;
+        if (panning.Y > minHeight - 150)
+            panning.Y = minHeight - 150;
+        if (panning.X > playerOffset - 150)
+            panning.X = playerOffset - 150;
 
         switch (draggingState) {
 
@@ -185,14 +229,18 @@ public class RummyGameLogic {
 
                 break;
             case PlayerInTile:
-                draggingItem.tile.setPosition(draggingItem.itemPosition.X - draggingItem.draggingOffset.X, draggingItem.itemPosition.Y - draggingItem.draggingOffset.Y);
+                draggingItem.tile.setPosition(draggingItem.getRealPosition());
                 draggingItem.tile.draw(canvas);
                 break;
             case FromTile:
                 break;
         }
 
-
+        if(draggingItem!=null){
+        com.TileRummy.Utils.Point pos=draggingItem.getRealPosition();
+        canvas.drawCircle(pos.X,pos.Y,10,Bucket.GetPaint("tileArea"));
+        }
+                
         canvas.restore();
 
         float pSize;
@@ -203,7 +251,7 @@ public class RummyGameLogic {
         canvas.drawRect(_tileArea.toRectF(), Bucket.GetPaint("tileArea"));
 
         if (playerTiles != null) {
-            playerTiles.setPosition(0, mCanvasHeight - pSize);
+            playerTiles.setPosition(new com.TileRummy.Utils.Point(6, mCanvasHeight - pSize));
             playerTiles.draw(_tileArea.Width, canvas);
         }
 
@@ -212,7 +260,7 @@ public class RummyGameLogic {
             case Empty:
                 break;
             case PlayerInHand:
-                draggingItem.tile.setPosition(draggingItem.itemPosition.X - draggingItem.draggingOffset.X, draggingItem.itemPosition.Y - draggingItem.draggingOffset.Y);
+                draggingItem.tile.setPosition(draggingItem.getRealPosition());
                 draggingItem.tile.draw(canvas);
                 break;
             case PlayerInTile:
@@ -220,7 +268,7 @@ public class RummyGameLogic {
             case FromTile:
                 break;
         }
-
+        menu.draw(mCanvasWidth, canvas);
         canvas.restore();
 
 
@@ -234,7 +282,7 @@ public class RummyGameLogic {
     }
 
     public void longPress(MotionEvent e) {
-        Point mousePoint = new Point(e.getX(), e.getY());
+        com.TileRummy.Utils.Point mousePoint = new com.TileRummy.Utils.Point(e.getX(), e.getY());
         sureUpPoint(mousePoint);
 
         for (PlayerInformation pl : playerInformation) {
@@ -246,9 +294,15 @@ public class RummyGameLogic {
 
     public boolean singleTap(MotionEvent e) {
         return false;
+
     }
 
     public boolean doubleTap(MotionEvent e) {
+        com.TileRummy.Utils.Point p = new com.TileRummy.Utils.Point(e.getX(), e.getY());
+
+        if (menu.collides(p, mCanvasWidth)) {
+            menu.doubleTap(p);
+        }
         return false;
     }
 
@@ -256,15 +310,20 @@ public class RummyGameLogic {
     public RummySet playerTiles;
     Timer longPressTimer;
 
-    Point mouseLocation = new Point(0, 0);
-    Point mouseVector = new Point(0, 0);
+    com.TileRummy.Utils.Point mouseLocation = new com.TileRummy.Utils.Point(0, 0);
+    com.TileRummy.Utils.Point mouseVector = new com.TileRummy.Utils.Point(0, 0);
 
     Rectangle _tileArea;
 
     public void touchDown(MotionEvent event) {
 
-        final Point mousePoint = new Point(event.getX(), event.getY());
-        mouseLocation = new Point(mousePoint);
+        final com.TileRummy.Utils.Point mousePoint = new com.TileRummy.Utils.Point(event.getX(), event.getY());
+
+        if (menu.collides(mousePoint, mCanvasWidth)) {
+            menu.touchDown(mousePoint);
+        }
+
+        mouseLocation = new com.TileRummy.Utils.Point(mousePoint);
 
 
         if (_tileArea.Collides(mousePoint)) {
@@ -280,14 +339,14 @@ public class RummyGameLogic {
 
     }
 
-    private void touchDownOnPlayerTiles(Point mousePoint) {
-        RummyTile tile = playerTiles.collideWithTile(mousePoint.X, mousePoint.Y);
+    private void touchDownOnPlayerTiles(com.TileRummy.Utils.Point mousePoint) {
+        RummyTile tile = playerTiles.collideWithTile(mousePoint);
         if (tile == null) return;
 
         tile.highlighted = true;
         clickMode = ClickMode.DraggingPlayerTile;
 
-        draggingItem = new MovingItem(tile, mousePoint, new Point(mousePoint.X - tile.X, mousePoint.Y - tile.Y));
+        draggingItem = new MovingItem(tile, mousePoint, new com.TileRummy.Utils.Point(mousePoint.X - tile.X, mousePoint.Y - tile.Y));
         draggingState = DraggingTileState.PlayerInHand;
         draggingSet = new RummySet();
         draggingSet.setBucket(tile.Set.Bucket);
@@ -299,7 +358,7 @@ public class RummyGameLogic {
     }
 
     public void touchUp(MotionEvent event) {
-
+        menu.touchUp(new com.TileRummy.Utils.Point(event.getX(), event.getY()));
 
         if (longPressTimer != null) longPressTimer.cancel();
         longPressTimer = null;
@@ -321,42 +380,47 @@ public class RummyGameLogic {
             case Empty:
                 break;
             case PlayerInTile:
-                PlayerInformation pl = getPlayer(draggingItem.itemPosition);
+                PlayerInformation pl = getPlayer(draggingItem.getRealPosition());
                 if (pl == null) {
 
                     playerTiles.addTile(draggingItem.tile);
 
 
                 } else {
-                    RummySet set = pl.getSet(draggingItem.itemPosition);
+                    RummySet set = pl.getSet(draggingItem.getRealPosition());
                     if (set == null) {
                         RummySet rs = new RummySet();
-                        rs.setPosition(draggingItem.itemPosition.X - draggingItem.draggingOffset.X, draggingItem.itemPosition.Y - draggingItem.draggingOffset.Y);
+                        rs.setPosition(draggingItem.getRealPosition());
                         pl.addSet(rs);
                         rs.addTile(draggingItem.tile);
                         try {
                             runner.rummyGameRoom.sendMessage(new RummyGameGameRoomMessage(RummyGameGameRoomMessage.GameRoomMessageType.AddSetToPlayer, pl.name).GenerateMessage());
                             runner.rummyGameRoom.sendMessage(new RummyGameGameRoomMessage(RummyGameGameRoomMessage.GameRoomMessageType.AddTileToSet, new TileData[]{draggingItem.tile.getTileData()}, pl.name, pl.Sets.size() - 1).GenerateMessage());
                         } catch (XMPPException e) {
-                            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+                            e.printStackTrace();
                         }
                     } else {
-                        RummyTile tile = set.collideWithTile(draggingItem.itemPosition.X, draggingItem.itemPosition.Y);
+                        RummyTile tile = set.collideWithTile(draggingItem.getRealPosition());
                         if (tile == null) {
                             set.addTile(draggingItem.tile);
                             try {
                                 runner.rummyGameRoom.sendMessage(new RummyGameGameRoomMessage(RummyGameGameRoomMessage.GameRoomMessageType.AddTileToSet, new TileData[]{draggingItem.tile.getTileData()}, pl.name, pl.Sets.indexOf(set)).GenerateMessage());
                             } catch (XMPPException e) {
-                                e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+                                e.printStackTrace();
                             }
 
                         } else {
-                            set.addTile(set.tiles.indexOf(tile), draggingItem.tile);
+                            int index = set.tiles.indexOf(tile);
+
+                            if (draggingItem.getRealPosition().X > tile.X + RummyTile.Width / 2)
+                                index++;
+
+                            set.addTile(index, draggingItem.tile);
 
                             try {                                                                                                                 //TODO:::Index
                                 runner.rummyGameRoom.sendMessage(new RummyGameGameRoomMessage(RummyGameGameRoomMessage.GameRoomMessageType.AddTileToSet, new TileData[]{draggingItem.tile.getTileData()}, pl.name, pl.Sets.indexOf(set)).GenerateMessage());
                             } catch (XMPPException e) {
-                                e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+                                e.printStackTrace();
                             }
 
                         }
@@ -368,7 +432,7 @@ public class RummyGameLogic {
             case PlayerInHand:
 
                 draggingItem.tile.highlighted = false;
-                Point m = new Point(event.getX(), event.getY());
+                com.TileRummy.Utils.Point m = new com.TileRummy.Utils.Point(event.getX(), event.getY());
 
                 if (_tileArea.Collides(m)) {
                     playerTiles.dropTile(draggingItem.tile, m);
@@ -391,7 +455,7 @@ public class RummyGameLogic {
 
     }
 
-    private PlayerInformation getPlayer(Point itemPosition) {
+    private PlayerInformation getPlayer(com.TileRummy.Utils.Point itemPosition) {
         for (PlayerInformation pls : playerInformation) {
             if (pls.collides(itemPosition)) {
                 return pls;
@@ -401,11 +465,11 @@ public class RummyGameLogic {
     }
 
     public void touchMove(MotionEvent event) {
-        Point last = new Point(mouseLocation);
+        com.TileRummy.Utils.Point last = new com.TileRummy.Utils.Point(mouseLocation);
         sureUpPoint(last);
 
-        mouseLocation = new Point(event.getX(), event.getY());
-        Point mousePoint = new Point(mouseLocation);
+        mouseLocation = new com.TileRummy.Utils.Point(event.getX(), event.getY());
+        com.TileRummy.Utils.Point mousePoint = new com.TileRummy.Utils.Point(mouseLocation);
         sureUpPoint(mousePoint);
 
 
@@ -414,38 +478,34 @@ public class RummyGameLogic {
             case Empty:
                 break;
             case PlayerInTile:
-                PlayerInformation pl = getPlayer(draggingItem.itemPosition);
+                PlayerInformation pl = getPlayer(draggingItem.getRealPosition());
                 if (pl == null) {
 
-                    synchronized (mSurfaceHolder) {
-                        for (PlayerInformation inf : playerInformation) {
-                            inf.EmptySet = false;
-                            for (RummySet set : inf.Sets) {
-                                set.EmptyTileIndex = -1;
-                            }
+                    for (PlayerInformation inf : playerInformation) {
+                        inf.EmptySet = false;
+                        for (RummySet set : inf.Sets) {
+                            set.EmptyTileIndex = -1;
                         }
-                        playerTiles.EmptyTileIndex = -1;
                     }
+                    playerTiles.EmptyTileIndex = -1;
 
                 } else {
-                    synchronized (mSurfaceHolder) {
 
-                        for (PlayerInformation inf : playerInformation) {
-                            inf.EmptySet = false;
-                            for (RummySet set : inf.Sets) {
-                                set.EmptyTileIndex = -1;
-                            }
+                    for (PlayerInformation inf : playerInformation) {
+                        inf.EmptySet = false;
+                        for (RummySet set : inf.Sets) {
+                            set.EmptyTileIndex = -1;
                         }
-                        playerTiles.EmptyTileIndex = -1;
+                    }
+                    playerTiles.EmptyTileIndex = -1;
 
 
-                        RummySet set = pl.getSet(draggingItem.itemPosition);
-                        if (set == null) {
-                            pl.EmptySet = true;
-                        } else {
-                            set.dropTile(null, draggingItem.itemPosition);
+                    RummySet set = pl.getSet(draggingItem.getRealPosition());
+                    if (set == null) {
+                        pl.EmptySet = true;
+                    } else {
+                        set.dropTile(null, draggingItem.getRealPosition());
 
-                        }
                     }
                 }
 
@@ -453,7 +513,7 @@ public class RummyGameLogic {
                 break;
             case PlayerInHand:
 
-                Point m = new Point(event.getX(), event.getY());
+                com.TileRummy.Utils.Point m = new com.TileRummy.Utils.Point(event.getX(), event.getY());
 
                 synchronized (mSurfaceHolder) {
                     for (PlayerInformation inf : playerInformation) {
@@ -479,10 +539,11 @@ public class RummyGameLogic {
 
                 synchronized (mSurfaceHolder) {
                     if (_tileArea.Collides(mouseLocation)) {
-                        draggingItem.itemPosition = mouseLocation;
+                        
+                        draggingItem.updatePosition( mouseLocation);
                         draggingState = DraggingTileState.PlayerInHand;
                     } else {
-                        draggingItem.itemPosition = mousePoint;
+                        draggingItem.updatePosition( mousePoint);
                         draggingState = DraggingTileState.PlayerInTile;
                     }
                 }
@@ -505,9 +566,9 @@ public class RummyGameLogic {
             }
         }
 
-}
+    }
 
-    private void sureUpPoint(Point last) {
+    private void sureUpPoint(com.TileRummy.Utils.Point last) {
         last.Negate(panning);
     }
 
