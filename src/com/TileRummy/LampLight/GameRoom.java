@@ -1,6 +1,6 @@
 package com.TileRummy.LampLight;
 
-import Helper.Horiz;
+import com.TileRummy.Utils.Horiz;
 import MessageParseJunk.WaitingRoomMessage;
 import android.app.Activity;
 import android.content.ComponentName;
@@ -16,7 +16,7 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.*;
 import com.TileRummy.R;
-import com.TileRummy.RummyGame;
+import com.TileRummy.drawables.RummyGame;
 import com.TileRummy.Service.GameInformation;
 import com.TileRummy.Service.MessageType;
 import com.TileRummy.Service.Messager;

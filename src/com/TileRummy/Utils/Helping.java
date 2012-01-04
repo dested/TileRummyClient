@@ -1,4 +1,4 @@
-package Helper;
+package com.TileRummy.Utils;
 
 import android.graphics.RectF;
 import android.util.Pair;

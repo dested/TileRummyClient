@@ -1,4 +1,4 @@
-package Helper;
+package com.TileRummy.Utils;
 
 import android.util.Base64;
 

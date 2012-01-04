@@ -20,6 +20,8 @@ public class PaintBucket {
 
 		hs.put(n, ps = new Paint());
         ps.setDither(true);
+
+        ps.setAntiAlias(true);
 		return ps;
 	}
 }

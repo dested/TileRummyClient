@@ -1,10 +1,12 @@
-package com.TileRummy;
+package com.TileRummy.drawables;
 
 import MessageParseJunk.TileData;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.RectF;
 import com.TileRummy.LampLight.PaintBucket;
+import com.TileRummy.RummyGameLogic;
+import com.TileRummy.Utils.MovingItem;
 import com.TileRummy.Utils.Point;
 import com.TileRummy.Utils.Rectangle;
 import com.TileRummy.Utils.TileColor;
@@ -54,11 +56,12 @@ public class RummyTile {
                 paint = Bucket.GetPaint("outerTileHighlight");
             }
         } else {
-            if (Set.Dragging) {
+       /*     if (Set.Dragging) {
                 paint = Bucket.GetPaint("outerTileHighlightSet");
             } else {
                 paint = Bucket.GetPaint("outerTile");
-            }
+            }*/
+            paint = Bucket.GetPaint("outerTile");
         }
 
         canvas.drawRoundRect(tileLoc, 3, 3, paint);
@@ -86,19 +89,13 @@ public class RummyTile {
     }
 
     public void longPress(float x, float y) {
-        RummyGameLogic lgc = this.Set.Logic;
+        RummyGameLogic lgc = this.Set.Logic; 
+        Point offset=new Point(this.X-x,this.Y-y);
+        longPressed = true; 
 
-
-        RummySet st = new RummySet();
-        st.X = x;
-        st.Y = y;
-        st.setBucket(this.Bucket);
-        longPressed = true;
-        this.Set.Dragging = false;
         this.Set.removeTile(this);
-        st.Dragging = true;
-        lgc.draggingSet = st;
-        st.addTile(this);
+        lgc.draggingItem=new MovingItem(this,new Point(x,y),offset);
+
     }
 
     public boolean collides(float xx, float yy) {

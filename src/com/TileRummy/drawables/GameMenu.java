@@ -1,6 +1,7 @@
-package com.TileRummy;
+package com.TileRummy.drawables;
 
 import android.graphics.Canvas;
+import com.TileRummy.RummyGameLogic;
 import com.TileRummy.Utils.Point;
 import com.TileRummy.Utils.Rectangle;
 

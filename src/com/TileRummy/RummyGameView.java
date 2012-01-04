@@ -13,30 +13,22 @@ import android.widget.TextView;
 import com.TileRummy.LampLight.PaintBucket;
 import com.TileRummy.Service.MultiRunner;
 
-class RummyGameView extends SurfaceView implements SurfaceHolder.Callback {
+public class RummyGameView extends SurfaceView implements SurfaceHolder.Callback {
 
     public Vibrator mVibrate;
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        if(!thread.logic.gameReady) return false;
+        if (!thread.logic.gameReady) return false;
         mScaleDetector.onTouchEvent(event);
         mGestureDetector.onTouchEvent(event);
-
         int be = event.getActionMasked();
-            switch (be) {
-
-                case MotionEvent.ACTION_DOWN:
-                    thread.logic.touchDown(event);
-                    break;
-                case MotionEvent.ACTION_UP:
-                case MotionEvent.ACTION_POINTER_UP:
-                    thread.logic.touchUp(event);
-                    break;
-                case MotionEvent.ACTION_MOVE:
-                    thread.logic.touchMove(event);
-                    break;
-            }
+        switch (be) {
+            case MotionEvent.ACTION_UP:
+            case MotionEvent.ACTION_POINTER_UP:
+                thread.logic.touchUp(event);
+                break;
+        }
         return true;
     }
 
@@ -44,7 +36,7 @@ class RummyGameView extends SurfaceView implements SurfaceHolder.Callback {
     public TextView mStatusText;
 
     public RummyGameThread thread;
-    protected MultiRunner runner;
+    public MultiRunner runner;
     private Handler handler;
 
     public RummyGameView(Context context, AttributeSet attrs) {
@@ -53,7 +45,6 @@ class RummyGameView extends SurfaceView implements SurfaceHolder.Callback {
         // Create our ScaleGestureDetector
         mScaleDetector = new ScaleGestureDetector(context, new ScaleListener());
         mGestureDetector = new GestureDetector(context, new GestureListener());
-
 
         // register our interest in hearing about changes to our surface
         SurfaceHolder holder = getHolder();
@@ -72,24 +63,11 @@ class RummyGameView extends SurfaceView implements SurfaceHolder.Callback {
         setFocusable(true); // make sure we get key events
     }
 
-    /**
-     * Fetches the animation thread corresponding to this LunarView.
-     *
-     * @return the animation thread
-     */
-    public RummyGameThread getThread() {
-        return thread;
-    }
-
-    /* Callback invoked when the surface dimensions change. */
     public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
         thread.setSurfaceSize(width, height);
     }
 
-    /*
-      * Callback invoked when the Surface has been created and is ready to be
-      * used.
-      */
+
     public void surfaceCreated(SurfaceHolder holder) {
         thread.setRunning(true);
         thread.start();
@@ -131,47 +109,47 @@ class RummyGameView extends SurfaceView implements SurfaceHolder.Callback {
 
         public boolean onSingleTapUp(android.view.MotionEvent e) {
 
-                  thread.logic.touchUp(e);
 
             return false;
         }
 
         public void onLongPress(android.view.MotionEvent e) {
-              thread.logic.longPress(e);
+            thread.logic.longPress(e);
 
 
         }
 
         public boolean onScroll(android.view.MotionEvent e1, android.view.MotionEvent e2, float distanceX, float distanceY) {
-            return false;
+            return thread.logic.drag(e1, e2, distanceX, distanceY);
         }
 
         public boolean onFling(android.view.MotionEvent e1, android.view.MotionEvent e2, float velocityX, float velocityY) {
-                 thread.logic.fling(velocityX, velocityY);
+            thread.logic.fling(velocityX, velocityY);
 
             return true;
         }
 
         public boolean onDown(android.view.MotionEvent e) {
+            thread.logic.onDown(e);
             return true;
         }
 
         public boolean onDoubleTap(android.view.MotionEvent e) {
-               return thread.logic.doubleTap(e);
+            return thread.logic.doubleTap(e);
 
         }
 
 
         public boolean onSingleTapConfirmed(android.view.MotionEvent e) {
-                return thread.logic.singleTap(e);
+            return thread.logic.singleTap(e);
 
         }
     }
 
-    class RummyGameThread extends Thread {
+    public class RummyGameThread extends Thread {
 
 
-        RummyGameLogic logic;
+        public RummyGameLogic logic;
 
 
         private boolean mRun = false;
@@ -191,7 +169,10 @@ class RummyGameView extends SurfaceView implements SurfaceHolder.Callback {
             while (mRun) {
                 Canvas c = null;
                 try {
+                    if (this.logic == null) continue;
                     c = mSurfaceHolder.lockCanvas(null);
+
+
                     synchronized (mSurfaceHolder) {
                         updateEngine();
                         doDraw(c);
@@ -212,6 +193,7 @@ class RummyGameView extends SurfaceView implements SurfaceHolder.Callback {
         }
 
         public void setSurfaceSize(int width, int height) {
+            if (this.logic == null) return;
             synchronized (mSurfaceHolder) {
                 logic.resize(width, height);
             }
@@ -219,11 +201,11 @@ class RummyGameView extends SurfaceView implements SurfaceHolder.Callback {
 
 
         private void doDraw(Canvas canvas) {
-            if (this.logic == null) return;
             this.logic.draw(canvas);
         }
 
         private void updateEngine() {
+
             this.logic.updateEngine();
         }
 

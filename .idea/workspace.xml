@@ -22,6 +22,12 @@
       </GlobalState>
     </option>
   </component>
+  <component name="AndroidLogFilters">
+    <option name="TOOL_WINDOW_CONFIGURED_FILTER" value="a" />
+  </component>
+  <component name="BookmarkManager">
+    <bookmark url="file://$PROJECT_DIR$/src/com/TileRummy/drawables/PlayerInformation.java" line="105" />
+  </component>
   <component name="ChangeListManager">
     <list default="true" id="556a4316-8b9c-4660-b48f-9a4d6d34e84a" name="Default" comment="" />
     <ignored path="TileRummy.iws" />
@@ -45,20 +51,7 @@
   </component>
   <component name="DebuggerManager">
     <line_breakpoints>
-      <breakpoint url="file://$PROJECT_DIR$/src/com/TileRummy/Service/MultiRunner.java" line="415" class="com.TileRummy.Service.MultiRunner$5" package="com.TileRummy.Service">
-        <option name="ENABLED" value="true" />
-        <option name="LOG_ENABLED" value="false" />
-        <option name="LOG_EXPRESSION_ENABLED" value="false" />
-        <option name="SUSPEND_POLICY" value="SuspendAll" />
-        <option name="COUNT_FILTER_ENABLED" value="false" />
-        <option name="COUNT_FILTER" value="0" />
-        <option name="CONDITION_ENABLED" value="false" />
-        <option name="CLASS_FILTERS_ENABLED" value="false" />
-        <option name="INSTANCE_FILTERS_ENABLED" value="false" />
-        <option name="CONDITION" value="" />
-        <option name="LOG_MESSAGE" value="" />
-      </breakpoint>
-      <breakpoint url="file://$PROJECT_DIR$/src/com/TileRummy/RummySet.java" line="112" class="com.TileRummy.RummySet" package="com.TileRummy">
+      <breakpoint url="file://$PROJECT_DIR$/src/com/TileRummy/Service/MultiRunner.java" line="418" class="com.TileRummy.Service.MultiRunner$5" package="com.TileRummy.Service">
         <option name="ENABLED" value="true" />
         <option name="LOG_ENABLED" value="false" />
         <option name="LOG_EXPRESSION_ENABLED" value="false" />
@@ -112,20 +105,13 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="GameRoom.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/TileRummy/LampLight/GameRoom.java">
+      <file leaf-file-name="RummyGame.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/com/TileRummy/drawables/RummyGame.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="130" column="53" selection-start="3289" selection-end="3289" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ClickMode.java" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/com/TileRummy/Utils/ClickMode.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="2" column="0" selection-start="30" selection-end="136" vertical-scroll-proportion="0.058925476">
-              <folding />
+            <state line="103" column="41" selection-start="3387" selection-end="3387" vertical-scroll-proportion="0.0">
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -133,78 +119,92 @@
       <file leaf-file-name="TileColor.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/TileRummy/Utils/TileColor.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="7" column="0" selection-start="129" selection-end="129" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="GameMenu.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/TileRummy/GameMenu.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="35" column="29" selection-start="1069" selection-end="1069" vertical-scroll-proportion="0.0">
+            <state line="11" column="26" selection-start="330" selection-end="330" vertical-scroll-proportion="0.0">
               <folding>
-                <element signature="imports" expanded="true" />
+                <element signature="e#487#507#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="MovingItem.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/TileRummy/Utils/MovingItem.java">
+      <file leaf-file-name="RummyGameLogic.java" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/com/TileRummy/RummyGameLogic.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="31" column="37" selection-start="781" selection-end="781" vertical-scroll-proportion="0.0">
+            <state line="298" column="49" selection-start="9490" selection-end="9490" vertical-scroll-proportion="0.55497384">
               <folding>
                 <element signature="imports" expanded="true" />
+                <element signature="e#698#717#0" expanded="true" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="RummyTile.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/TileRummy/RummyTile.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="38" column="16" selection-start="868" selection-end="868" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="PaintBucket.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/TileRummy/LampLight/PaintBucket.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="6" column="13" selection-start="106" selection-end="106" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="StartingRoom.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/TileRummy/LampLight/StartingRoom.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="21" column="13" selection-start="671" selection-end="671" vertical-scroll-proportion="0.0">
-              <folding />
             </state>
           </provider>
         </entry>
       </file>
       <file leaf-file-name="PlayerInformation.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/TileRummy/PlayerInformation.java">
+        <entry file="file://$PROJECT_DIR$/src/com/TileRummy/drawables/PlayerInformation.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="59" column="28" selection-start="1707" selection-end="1707" vertical-scroll-proportion="0.0">
+            <state line="0" column="25" selection-start="22" selection-end="25" vertical-scroll-proportion="-0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="RummyGameLogic.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/TileRummy/RummyGameLogic.java">
+      <file leaf-file-name="RummyTile.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/com/TileRummy/drawables/RummyTile.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="289" column="23" selection-start="9142" selection-end="9142" vertical-scroll-proportion="-33.32">
+            <state line="55" column="0" selection-start="1256" selection-end="1256" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="RummyGameView.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/com/TileRummy/RummyGameView.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="204" column="0" selection-start="5923" selection-end="5923" vertical-scroll-proportion="0.0">
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#630#649#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="RummySet.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/com/TileRummy/drawables/RummySet.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="86" column="45" selection-start="2497" selection-end="2497" vertical-scroll-proportion="0.0">
+              <folding>
+                <element signature="e#2698#2706#0" expanded="true" />
+                <element signature="e#3786#3794#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="MessageBox.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/com/TileRummy/Utils/MessageBox.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="38" column="39" selection-start="911" selection-end="911" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="RummyGameGameRoomMessage.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/MessageParseJunk/RummyGameGameRoomMessage.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="28" column="56" selection-start="812" selection-end="823" vertical-scroll-proportion="0.0">
+              <folding>
+                <element signature="e#4493#4503#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="MultiRunner.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/com/TileRummy/Service/MultiRunner.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="547" column="14" selection-start="19953" selection-end="19956" vertical-scroll-proportion="-6.6">
+              <folding />
             </state>
           </provider>
         </entry>
@@ -224,22 +224,22 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/src/com/TileRummy/Point.java" />
-        <option value="$PROJECT_DIR$/AndroidManifest.xml" />
-        <option value="$PROJECT_DIR$/src/com/TileRummy/LampLight/PaintBucket.java" />
-        <option value="$PROJECT_DIR$/src/com/TileRummy/RummyGame.java" />
-        <option value="$PROJECT_DIR$/src/com/TileRummy/RummyGameView.java" />
-        <option value="$PROJECT_DIR$/src/com/TileRummy/GameMenu.java" />
-        <option value="$PROJECT_DIR$/src/MessageParseJunk/RummyGameGameRoomMessage.java" />
-        <option value="$PROJECT_DIR$/src/com/TileRummy/Service/MultiRunner.java" />
-        <option value="$PROJECT_DIR$/src/com/TileRummy/GameMenuButton.java" />
-        <option value="$PROJECT_DIR$/src/com/TileRummy/TileColor.java" />
-        <option value="$PROJECT_DIR$/src/com/TileRummy/RummyTile.java" />
-        <option value="$PROJECT_DIR$/src/com/TileRummy/MovingItem.java" />
-        <option value="$PROJECT_DIR$/src/com/TileRummy/RummyGameLogic.java" />
-        <option value="$PROJECT_DIR$/src/com/TileRummy/RummySet.java" />
         <option value="$PROJECT_DIR$/src/com/TileRummy/PlayerInformation.java" />
         <option value="$PROJECT_DIR$/src/com/TileRummy/Utils/ClickMode.java" />
+        <option value="$PROJECT_DIR$/src/com/TileRummy/drawables/GameMenu.java" />
+        <option value="$PROJECT_DIR$/src/com/TileRummy/Utils/TileColor.java" />
+        <option value="$PROJECT_DIR$/src/com/TileRummy/LampLight/PaintBucket.java" />
+        <option value="$PROJECT_DIR$/src/com/TileRummy/DraggingTileState.java" />
+        <option value="$PROJECT_DIR$/src/com/TileRummy/Utils/DraggingTileState.java" />
+        <option value="$PROJECT_DIR$/src/com/TileRummy/Utils/Horiz.java" />
+        <option value="$PROJECT_DIR$/src/com/TileRummy/drawables/RummyGame.java" />
+        <option value="$PROJECT_DIR$/src/com/TileRummy/drawables/RummyTile.java" />
+        <option value="$PROJECT_DIR$/src/com/TileRummy/drawables/PlayerInformation.java" />
+        <option value="$PROJECT_DIR$/src/MessageParseJunk/RummyGameGameRoomMessage.java" />
+        <option value="$PROJECT_DIR$/src/com/TileRummy/Service/MultiRunner.java" />
+        <option value="$PROJECT_DIR$/src/com/TileRummy/RummyGameView.java" />
+        <option value="$PROJECT_DIR$/src/com/TileRummy/drawables/RummySet.java" />
+        <option value="$PROJECT_DIR$/src/com/TileRummy/RummyGameLogic.java" />
       </list>
     </option>
   </component>
@@ -314,6 +314,10 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="MessageParseJunk" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -406,6 +410,64 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="com" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="TileRummy" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="drawables" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="TileRummy" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="TileRummy_2" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="com" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="TileRummy" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="TileRummy_2" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="res" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="TileRummy" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="TileRummy_2" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="res" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="layout" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -729,14 +791,15 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1014" extended-state="6" />
-    <editor active="true" />
+    <editor active="false" />
     <layout>
       <window_info id="Data Sources" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32959402" sideWeight="0.6366823" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32959402" sideWeight="0.6016355" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.29672897" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.29672897" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.2497332" sideWeight="0.6705608" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.36331776" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.48014018" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="IDEtalk Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
@@ -747,13 +810,12 @@
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.16025642" sideWeight="0.70327103" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.16025642" sideWeight="0.5198598" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3352804" sideWeight="0.4791889" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Android Logcat" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32827103" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24946581" sideWeight="0.60046726" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32959402" sideWeight="0.6016355" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Android Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32943925" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Dependency Viewer" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32943925" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
@@ -849,122 +911,129 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="jar://B:/Program Files (x86)/Android/android-sdk/platforms/android-10/android.jar!/android/graphics/Paint.class">
+    <entry file="file://$PROJECT_DIR$/src/com/TileRummy/Utils/TileColor.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="241" column="71" selection-start="9415" selection-end="9430" vertical-scroll-proportion="0.0">
+        <state line="11" column="26" selection-start="330" selection-end="330" vertical-scroll-proportion="0.0">
+          <folding>
+            <element signature="e#487#507#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/TileRummy/LampLight/PaintBucket.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="23" column="10" selection-start="428" selection-end="428" vertical-scroll-proportion="0.4296029">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/TileRummy/Utils/TouchDownState.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="2" column="22" selection-start="52" selection-end="52" vertical-scroll-proportion="0.04091456">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/TileRummy/Utils/WSHelper.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="35" column="61" selection-start="943" selection-end="943" vertical-scroll-proportion="0.67509025">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/res/layout/gameroom_layout.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="9" column="23" selection-start="497" selection-end="497" vertical-scroll-proportion="0.18865599">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/AndroidManifest.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/TileRummy/Utils/Horiz.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="5" column="16" selection-start="156" selection-end="156" vertical-scroll-proportion="0.06137184">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/TileRummy/Utils/MessageBox.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="38" column="39" selection-start="911" selection-end="911" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/TileRummy/drawables/RummyGame.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="103" column="41" selection-start="3387" selection-end="3387" vertical-scroll-proportion="0.0">
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/TileRummy/drawables/RummyTile.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="55" column="0" selection-start="1256" selection-end="1256" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/TileRummy/drawables/PlayerInformation.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="25" selection-start="22" selection-end="25" vertical-scroll-proportion="-0.0">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/MessageParseJunk/RummyGameGameRoomMessage.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="203" column="42" selection-start="28" selection-end="6435" vertical-scroll-proportion="0.0">
+        <state line="28" column="56" selection-start="812" selection-end="823" vertical-scroll-proportion="0.0">
           <folding>
-            <element signature="e#4506#4516#0" expanded="true" />
+            <element signature="e#4493#4503#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/TileRummy/Service/MultiRunner.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="509" column="0" selection-start="18701" selection-end="18701" vertical-scroll-proportion="0.0">
+        <state line="547" column="14" selection-start="19953" selection-end="19956" vertical-scroll-proportion="-6.6">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/TileRummy/GameMenuButton.java">
+    <entry file="file://$PROJECT_DIR$/src/com/TileRummy/RummyGameView.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="35" column="81" selection-start="962" selection-end="962" vertical-scroll-proportion="0.0">
+        <state line="204" column="0" selection-start="5923" selection-end="5923" vertical-scroll-proportion="0.0">
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/TileRummy/RummySet.java">
+    <entry file="file://$PROJECT_DIR$/src/com/TileRummy/drawables/RummySet.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="120" column="18" selection-start="3552" selection-end="3552" vertical-scroll-proportion="0.0">
+        <state line="86" column="45" selection-start="2497" selection-end="2497" vertical-scroll-proportion="0.0">
           <folding>
-            <element signature="e#2814#2822#0" expanded="true" />
-            <element signature="e#3200#3208#0" expanded="true" />
+            <element signature="e#2698#2706#0" expanded="true" />
+            <element signature="e#3786#3794#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/TileRummy/RummyGameLogic.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="289" column="23" selection-start="9142" selection-end="9142" vertical-scroll-proportion="-33.32">
+        <state line="298" column="49" selection-start="9490" selection-end="9490" vertical-scroll-proportion="0.55497384">
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#630#649#0" expanded="true" />
+            <element signature="e#698#717#0" expanded="true" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/TileRummy/RummyTile.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="38" column="16" selection-start="868" selection-end="868" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/TileRummy/LampLight/PaintBucket.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="6" column="13" selection-start="106" selection-end="106" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/TileRummy/LampLight/StartingRoom.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="21" column="13" selection-start="671" selection-end="671" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/TileRummy/GameMenu.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="35" column="29" selection-start="1069" selection-end="1069" vertical-scroll-proportion="0.0">
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/TileRummy/PlayerInformation.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="59" column="28" selection-start="1707" selection-end="1707" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/TileRummy/LampLight/GameRoom.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="130" column="53" selection-start="3289" selection-end="3289" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/TileRummy/Utils/TileColor.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="7" column="0" selection-start="129" selection-end="129" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/TileRummy/Utils/MovingItem.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="31" column="37" selection-start="781" selection-end="781" vertical-scroll-proportion="0.0">
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/TileRummy/Utils/ClickMode.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="2" column="0" selection-start="30" selection-end="136" vertical-scroll-proportion="0.058925476">
-          <folding />
         </state>
       </provider>
     </entry>

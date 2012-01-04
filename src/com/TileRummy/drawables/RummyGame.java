@@ -1,4 +1,4 @@
-package com.TileRummy;
+package com.TileRummy.drawables;
 
 import android.app.Activity;
 import android.content.ComponentName;
@@ -10,6 +10,8 @@ import android.os.IBinder;
 import android.os.Vibrator;
 import android.view.Window;
 import android.view.WindowManager;
+import com.TileRummy.R;
+import com.TileRummy.RummyGameView;
 import com.TileRummy.Service.Messager;
 import com.TileRummy.Service.MultiRunner;
 
@@ -99,8 +101,7 @@ public class RummyGame extends Activity {
 
         // get handles to the LunarView from XML, and its LunarThread
         mLunarView = (RummyGameView) findViewById(R.id.RummyGame);
-        mLunarThread = mLunarView.getThread();
-
+        mLunarThread = mLunarView.thread;
         mLunarView.mVibrate = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
 
         // mLunarThread.setState(GrameThread.STATE_INIT);

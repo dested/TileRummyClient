@@ -1,6 +1,7 @@
-package com.TileRummy;
+package com.TileRummy.drawables;
 
 import android.graphics.Canvas;
+import com.TileRummy.RummyGameLogic;
 import com.TileRummy.Utils.Point;
 import com.TileRummy.Utils.Rectangle;
 
@@ -10,14 +11,39 @@ public class PlayerInformation {
     public ArrayList<RummySet> Sets = new ArrayList<RummySet>();
     private RummyGameLogic logic;
     private Point Location;
-    float Height;
-    public float Width;
     public String name;
     public boolean EmptySet;
 
     public PlayerInformation(RummyGameLogic logic, String name) {
         this.logic = logic;
         this.name = name;
+    }
+
+    public float getHeight() {
+        float curY = Location.Y;
+        curY += 7;
+        for (RummySet Set : Sets) {
+            Set.setPosition(new Point(Location.X, curY));
+            curY += Set.getHeight(getWidth()) + 5;
+        }
+        if (EmptySet) {
+            curY += RummyTile.Height + 7;
+        }
+        return curY + 150;
+    }
+
+    public float getWidth() {
+        int maxTiles = 1;
+
+        for (RummySet Set : Sets) {
+            if (maxTiles < Set.tiles.size()) {
+                maxTiles = Set.tiles.size();
+                if (maxTiles >= 6) maxTiles = 6;
+            }
+
+        }
+
+        return (RummyTile.Width + 7) * maxTiles + 25;
     }
 
     public void addSet(RummySet set) {
@@ -42,14 +68,14 @@ public class PlayerInformation {
     }
 
     public void draw(Canvas canvas) {
-        Width = (RummyTile.Width + 7) * 6 + 25;
-
+        float w = getWidth();
         float curY = Location.Y;
-        canvas.drawText(name, Location.X + (Width / 4), curY, this.logic.Bucket.GetPaint("nameText"));
+        canvas.drawText(name, Location.X + (w / 4), curY, this.logic.Bucket.GetPaint("nameText"));
         curY += 7;
         for (RummySet Set : Sets) {
             Set.setPosition(new Point(Location.X, curY));
-            curY += Set.draw(Width, canvas) + 5;
+            Set.draw(w, canvas);
+            curY += Set.getHeight(w) + 5;
         }
         if (EmptySet) {
 
@@ -57,12 +83,11 @@ public class PlayerInformation {
             curY += RummyTile.Height + 7;
 
         }
-        Height = curY + 150;
 
     }
 
     public RummySet getSet(Point itemPosition) {
-        if (new Rectangle(Location, Width, Height).Collides(itemPosition)) {
+        if (new Rectangle(Location, getWidth(), getHeight()).Collides(itemPosition)) {
             for (RummySet Set : Sets) {
                 if (Set.collides(itemPosition)) {
                     return Set;
@@ -78,7 +103,7 @@ public class PlayerInformation {
     }
 
     public boolean collides(Point itemPosition) {
-        Rectangle rt = Location.toRectangle(Width, Height);
+        Rectangle rt = Location.toRectangle(getWidth(), getHeight());
         return rt.Collides(itemPosition);
     }
 

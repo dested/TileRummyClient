@@ -2,7 +2,7 @@ package com.TileRummy.Service;
 
 import java.util.*;
 
-import Helper.Helping;
+import com.TileRummy.Utils.Helping;
 import MessageParseJunk.RummyGameGameRoomMessage;
 import MessageParseJunk.TileData;
 import MessageParseJunk.WaitingRoomMessage;
@@ -11,6 +11,9 @@ import android.os.Vibrator;
 import android.view.SurfaceHolder;
 import com.TileRummy.*;
 import com.TileRummy.Utils.TileColor;
+import com.TileRummy.drawables.PlayerInformation;
+import com.TileRummy.drawables.RummySet;
+import com.TileRummy.drawables.RummyTile;
 import org.jivesoftware.smack.ConnectionConfiguration;
 import org.jivesoftware.smack.PacketListener;
 import org.jivesoftware.smack.SmackConfiguration;
@@ -467,10 +470,6 @@ for (FriendsPlaying f : rummyGameGame.friends) {
 
                                 rgl.playerInformation = new ArrayList<PlayerInformation>();
 
-                                for (String name : gm.PlayerNames) {
-                                    PlayerInformation pi;
-                                    rgl.playerInformation.add(pi = new PlayerInformation(rgl, name));
-                                }
 
                                 break;
                             case AddSetToPlayer:
@@ -516,6 +515,11 @@ for (FriendsPlaying f : rummyGameGame.friends) {
                                 }
                                 break;
                             case GameStarted:
+
+                                for (String name : gm.PlayerNames) {
+                                    PlayerInformation pi;
+                                    rgl.playerInformation.add(pi = new PlayerInformation(rgl, name));
+                                }
 
                                 startGame();
 

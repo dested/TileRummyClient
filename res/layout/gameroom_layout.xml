@@ -3,7 +3,7 @@
 	android:layout_width="fill_parent" android:layout_height="fill_parent"
 	android:orientation="horizontal" xmlns:android="http://schemas.android.com/apk/res/android">
 
-	<Helper.Horiz android:layout_width="fill_parent"
+	<com.TileRummy.Utils.Horiz android:layout_width="fill_parent"
 		android:id="@+id/horzView" android:layout_height="fill_parent">
 		<LinearLayout android:id="@+id/gameRoom"
 			android:layout_width="wrap_content" android:layout_height="fill_parent">
@@ -44,5 +44,5 @@
 				android:layout_alignRight="@id/Filler2">
 			</ListView>
 		</LinearLayout>
-	</Helper.Horiz>
+	</com.TileRummy.Utils.Horiz>
 </RelativeLayout> 

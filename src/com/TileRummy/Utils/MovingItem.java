@@ -1,7 +1,7 @@
 package com.TileRummy.Utils;
 
-import com.TileRummy.RummySet;
-import com.TileRummy.RummyTile;
+import com.TileRummy.drawables.RummySet;
+import com.TileRummy.drawables.RummyTile;
 
 public class    MovingItem {
     public RummyTile tile;

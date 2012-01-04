@@ -1,4 +1,4 @@
-package Helper;
+package com.TileRummy.Utils;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.widget.HorizontalScrollView;

@@ -28,10 +28,7 @@ public class RummyGameGameRoomMessage {
             case 0:
                 t.Type = GameRoomMessageType.PlayerTiles;
                 t.TileData = parseRummyTiles(d[1]);
-                t.PlayerNames = new ArrayList<String>();
-                for (int i = 2; i < d.length; i++) {
-                    t.PlayerNames.add(d[i]);
-                }
+
                 break;
             case 1:
                 t.Type = GameRoomMessageType.AddSetToPlayer;
@@ -71,6 +68,10 @@ public class RummyGameGameRoomMessage {
 
             case 7:
                 t.Type = GameRoomMessageType.GameStarted;
+                t.PlayerNames = new ArrayList<String>();
+                for (int i = 2; i < d.length; i++) {
+                    t.PlayerNames.add(d[i]);
+                }
                 break;
             case 8:
                 t.Type = GameRoomMessageType.GameFinish;
@@ -93,12 +94,10 @@ public class RummyGameGameRoomMessage {
 
             case PlayerTiles:
                 d = "0|" + makeRummyTiles(TileData);
-                for (String PlayerName1 : PlayerNames) {
-                    d += "|" + PlayerName1;
-                }
+
                 break;
             case AddSetToPlayer:
-                d = String.format("1|%s",  PlayerName);
+                d = String.format("1|%s", PlayerName);
                 break;
             case AddTileToSet:
                 d = String.format("2|%s|%s|%d", makeRummyTiles(TileData), PlayerName, SetIndex);
@@ -114,10 +113,13 @@ public class RummyGameGameRoomMessage {
                 d = String.format("5|%s|%s", makeRummyTiles(TileData), PlayerName);
                 break;
             case GiveMeTile:
-                d = String.format("6|%s",  PlayerName);
+                d = String.format("6|%s", PlayerName);
                 break;
             case GameStarted:
                 d = "7|";
+                for (String pname : PlayerNames) {
+                    d += "|" + pname;
+                }
                 break;
             case GameFinish:
                 d = "8|";
@@ -133,7 +135,6 @@ public class RummyGameGameRoomMessage {
 
         return d;// + "|" + Argument;
     }
-
     private static TileData[] parseRummyTiles(String string) {
         ArrayList<TileData> td = new ArrayList<TileData>();
         for (String d : string.split("\\.")) {

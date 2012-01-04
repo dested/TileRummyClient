@@ -1,4 +1,4 @@
-package Helper;
+package com.TileRummy.Utils;
 
 
 import com.TileRummy.Utils.Rectangle;
