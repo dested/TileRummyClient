@@ -1,6 +1,7 @@
 package com.TileRummy.drawables;
 
 
+import MessageParseJunk.TileData;
 import android.graphics.Canvas;
 import com.TileRummy.LampLight.PaintBucket;
 import com.TileRummy.RummyGameLogic;
@@ -81,8 +82,8 @@ public class RummySet {
         }
         if (EmptyTileIndex == tiles.size()) {
 
-            float x = (RummyTile.Width + 7) * ((tiles.size()-1) % wrap) + this.X + emptyXOffset;
-            float y = (RummyTile.Height + 7) * ((float) Math.floor((tiles.size()-1) / wrap)) + this.Y;
+            float x = (RummyTile.Width + 7) * ((tiles.size() - 1) % wrap) + this.X + emptyXOffset;
+            float y = (RummyTile.Height + 7) * ((float) Math.floor((tiles.size() - 1) / wrap)) + this.Y;
             canvas.drawRoundRect(new Rectangle(x, y, 32, RummyTile.Height).toRectF(), 3, 3, Bucket.GetPaint("outerTileLongPressed"));
 
         }
@@ -110,7 +111,7 @@ public class RummySet {
 
             if (!skip && EmptyTileIndex == i) {
 
-                emptyDistance = Math.sqrt(Math.pow(((tile.X + RummyTile.Width / 2) - p.X) + (45f / 2f), 2) + Math.pow((tile.Y + RummyTile.Height / 2) - p.Y, 2))                    ;
+                emptyDistance = Math.sqrt(Math.pow(((tile.X + RummyTile.Width / 2) - p.X) + (45f / 2f), 2) + Math.pow((tile.Y + RummyTile.Height / 2) - p.Y, 2));
                 emptyXOffset += 45;
                 skip = true;
                 i--;
@@ -138,37 +139,43 @@ public class RummySet {
     }
 
 
-    public void dropTile(RummyTile tile, Point pos) {
+    public void dropTile(RummySet set, Point pos) {
         RummyTile tl = collideWithTile(pos);
         if (tl != null) {
             int index = tiles.indexOf(tl);
 
             if (pos.X > tl.X + RummyTile.Width / 2)
                 index++;
-            if (tile == null) {
+            if (set == null) {
 
                 EmptyTileIndex = index;
-            } else
-                addTile(index, tile);
+            } else {
+                for (RummyTile tile : set.tiles)
+                    addTile(index, tile);
+            }
             return;
         }
 
-        if (tile == null) {
+        if (set == null) {
             EmptyTileIndex = tiles.size() - 1;
-        } else
-            addTile(tile);
+        } else {
+            for (RummyTile tile : set.tiles)
+                addTile(tile);
+        }
 
 
         return;
     }
 
-    public float getHeight(float width) {
-        float h = 0;
+    public float getHeight(float width, boolean min) {
         int wrap = (int) (width / (RummyTile.Width + 7));
-        for (int i = 0; i < tiles.size(); i++) {
-            h += (RummyTile.Height + 7) * ((float) Math.floor(i / wrap));
+        float c = 1 + ((float) Math.floor((tiles.size() - 1) / wrap));
+
+        if (c == 1 && min) {
+            c++;
         }
-        return (RummyTile.Height + 7) * (1 + ((float) Math.floor((tiles.size() - 1) / wrap)));
+        float f = (RummyTile.Height + 7) * (c);
+        return f;
     }
 
 
@@ -176,7 +183,18 @@ public class RummySet {
         for (RummyTile tile : tiles) {
             if (tile.collides(mousePoint)) {
                 tile.longPress(mousePoint);
+                return;
             }
         }
+    }
+
+    public TileData[] getTileData() {
+        ArrayList<TileData> td = new ArrayList<TileData>();
+        for (RummyTile tile : tiles) {
+            td.add(tile.getTileData());
+        }
+        TileData[] ts = new TileData[td.size()];
+        td.toArray(ts);
+        return ts;
     }
 }

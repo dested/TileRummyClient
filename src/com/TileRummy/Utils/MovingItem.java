@@ -4,20 +4,11 @@ import com.TileRummy.drawables.RummySet;
 import com.TileRummy.drawables.RummyTile;
 
 public class    MovingItem {
-    public RummyTile tile;
     public RummySet set;
     private Point itemPosition;
     private Point draggingOffset;
     public Point getRealPosition(){
         return new Point(itemPosition.X-draggingOffset.X, itemPosition.Y-draggingOffset.Y);
-    }
-
-    public MovingItem(RummyTile tile, Point p1, Point offset) {
-        this.tile = tile;
-        itemPosition = p1;
-        draggingOffset = offset;
-
-
     }
 
     public MovingItem(RummySet set, Point p1, Point offset) {

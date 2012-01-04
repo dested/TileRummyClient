@@ -482,7 +482,12 @@ for (FriendsPlaying f : rummyGameGame.friends) {
                             case AddTileToSet:
                                 for (PlayerInformation infs : rgl.playerInformation) {
                                     if (infs.name.equals(gm.PlayerName)) {
-                                        infs.Sets.get(gm.SetIndex).addTile(new RummyTile(gm.TileData[0].Number, TileColor.getColor(gm.TileData[0].Color)));
+                                        int c=0;
+                                        for (TileData td : gm.TileData) {
+                                            infs.Sets.get(gm.SetIndex).addTile(gm.MoveToSetIndex+(c++),new RummyTile(td.Number, TileColor.getColor(td.Color)));
+
+                                        }
+
                                     }
                                 }
                                 break;

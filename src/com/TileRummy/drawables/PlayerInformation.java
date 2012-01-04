@@ -10,7 +10,7 @@ import java.util.ArrayList;
 public class PlayerInformation {
     public ArrayList<RummySet> Sets = new ArrayList<RummySet>();
     private RummyGameLogic logic;
-    private Point Location;
+    public Point Location;
     public String name;
     public boolean EmptySet;
 
@@ -24,7 +24,7 @@ public class PlayerInformation {
         curY += 7;
         for (RummySet Set : Sets) {
             Set.setPosition(new Point(Location.X, curY));
-            curY += Set.getHeight(getWidth()) + 5;
+            curY += Set.getHeight(getWidth(),false) + 5;
         }
         if (EmptySet) {
             curY += RummyTile.Height + 7;
@@ -75,7 +75,7 @@ public class PlayerInformation {
         for (RummySet Set : Sets) {
             Set.setPosition(new Point(Location.X, curY));
             Set.draw(w, canvas);
-            curY += Set.getHeight(w) + 5;
+            curY += Set.getHeight(w,false) + 5;
         }
         if (EmptySet) {
 

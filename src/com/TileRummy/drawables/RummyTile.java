@@ -4,12 +4,10 @@ import MessageParseJunk.TileData;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.RectF;
+import com.TileRummy.BackupState;
 import com.TileRummy.LampLight.PaintBucket;
 import com.TileRummy.RummyGameLogic;
-import com.TileRummy.Utils.MovingItem;
-import com.TileRummy.Utils.Point;
-import com.TileRummy.Utils.Rectangle;
-import com.TileRummy.Utils.TileColor;
+import com.TileRummy.Utils.*;
 
 
 public class RummyTile {
@@ -23,6 +21,7 @@ public class RummyTile {
     public PaintBucket Bucket;
     public boolean highlighted;
     public boolean longPressed;
+    public boolean Selected;
 
     public RummyTile(int i, TileColor red) {
 
@@ -49,14 +48,14 @@ public class RummyTile {
         tileLoc = new Rectangle(X, Y, Width, Height).toRectF();
 
 
-        if (highlighted) {
+        if (highlighted || Selected) {
             if (longPressed) {
                 paint = Bucket.GetPaint("outerTileLongPressed");
             } else {
                 paint = Bucket.GetPaint("outerTileHighlight");
             }
         } else {
-       /*     if (Set.Dragging) {
+            /*     if (Set.Dragging) {
                 paint = Bucket.GetPaint("outerTileHighlightSet");
             } else {
                 paint = Bucket.GetPaint("outerTile");
@@ -88,15 +87,6 @@ public class RummyTile {
         canvas.drawCircle(tileLoc.left + Width * .75f, tileLoc.top + Height * .5f, Height / 3, highlighted ? Bucket.GetPaint("tileCircleHighlight") : Bucket.GetPaint("tileCircle"));
     }
 
-    public void longPress(float x, float y) {
-        RummyGameLogic lgc = this.Set.Logic; 
-        Point offset=new Point(this.X-x,this.Y-y);
-        longPressed = true; 
-
-        this.Set.removeTile(this);
-        lgc.draggingItem=new MovingItem(this,new Point(x,y),offset);
-
-    }
 
     public boolean collides(float xx, float yy) {
         return new Rectangle(X, Y, Width, Height).Collides(xx, yy);
@@ -108,7 +98,21 @@ public class RummyTile {
     }
 
     public void longPress(Point mousePoint) {
-        longPress(mousePoint.X, mousePoint.Y);
+        RummyGameLogic lgc = this.Set.Logic;
+        lgc.touchState = TouchDownState.FromTile;
+
+        lgc.lastState = new BackupState(this.Set.Player.name, this.Set.Player.Sets.indexOf(this.Set), this.Set.tiles.indexOf(this));
+
+        Point offset = new Point(this.X - mousePoint.X, this.Y - mousePoint.Y);
+        longPressed = true;
+
+        this.Set.removeTile(this);
+
+        RummySet set = new RummySet();
+        set.setBucket(this.Bucket);
+        set.addTile(this);
+        lgc.draggingItem = new MovingItem(set, new Point(mousePoint.X, mousePoint.Y), offset);
+
     }
 
     public TileData getTileData() {
