@@ -4,6 +4,7 @@ import android.graphics.Canvas;
 import android.view.MotionEvent;
 
 import java.util.ArrayList;
+import java.util.Set;
 import java.util.logging.XMLFormatter;
 
 public class PlayerInformation {
@@ -13,6 +14,7 @@ public class PlayerInformation {
     private float Height;
     public float Width;
     public String name;
+    public boolean EmptySet;
 
     public PlayerInformation(RummyGameLogic logic, String name) {
         this.logic = logic;
@@ -24,12 +26,15 @@ public class PlayerInformation {
         set.Player = this;
         set.Logic = this.logic;
         set.setBucket(this.logic.Bucket);
-    }    public void addSet(int j,RummySet set) {
-        Sets.add(j,set);
+    }
+
+    public void addSet(int j, RummySet set) {
+        Sets.add(j, set);
         set.Player = this;
         set.Logic = this.logic;
         set.setBucket(this.logic.Bucket);
     }
+
     public void removedSet(RummySet set) {
         Sets.remove(set);
         set.Player = null;
@@ -38,16 +43,22 @@ public class PlayerInformation {
     }
 
     public void draw(Canvas canvas) {
-        Width = (RummyTile.Width + 7) * 6+25;
+        Width = (RummyTile.Width + 7) * 6 + 25;
 
         int curY = 0;
-        canvas.drawText(name, Location.X +(Width/4), curY, this.logic.Bucket.GetPaint("nameText"));
+        canvas.drawText(name, Location.X + (Width / 4), curY, this.logic.Bucket.GetPaint("nameText"));
         curY += 7;
         for (RummySet Set : Sets) {
             Set.setPosition(Location.X, curY);
-            curY += Set.draw(Width, canvas)+5;
+            curY += Set.draw(Width, canvas) + 5;
         }
-        Height = curY+150;
+        if (EmptySet) {
+
+            canvas.drawRoundRect(new Rectangle(Location.X, curY, 35, RummyTile.Height).toRectF(), 3, 3, this.logic.Bucket.GetPaint("outerTileLongPressed"));
+            curY += RummyTile.Height + 7;
+
+        }
+        Height = curY + 150;
 
     }
 

@@ -21,14 +21,11 @@ public class RummySet {
     public boolean Dragging;
     public PlayerInformation Player;
     private float height;
-    public boolean dummy;
+    public int EmptyTileIndex=-1;
 
     public RummySet() {
     }
 
-    public RummySet(boolean b) {
-        dummy = b;
-    }
 
     public void setBucket(PaintBucket bucket) {
         Bucket = bucket;
@@ -62,11 +59,23 @@ public class RummySet {
 
 
         int wrap = (int) (width / (RummyTile.Width + 7));
-
+        float emptyXOffset = 0;
+        boolean skip=false;
         for (int i = 0; i < tiles.size(); i++) {
 
-            float x = (RummyTile.Width + 7) * (i % wrap) + this.X;
+            if (i % wrap == 0 && emptyXOffset > 0) emptyXOffset = 0;
+            float x = (RummyTile.Width + 7) * (i % wrap) + this.X + emptyXOffset;
             float y = (RummyTile.Height + 7) * ((float) Math.floor(i / wrap)) + this.Y;
+
+
+            if (!skip && EmptyTileIndex == i ) {
+                canvas.drawRoundRect(new Rectangle(x, y, 32, RummyTile.Height).toRectF(), 3, 3, Bucket.GetPaint("outerTileLongPressed"));
+                emptyXOffset += 45;
+                skip=true;
+                i--;
+
+                continue;
+            }
 
             tiles.get(i).setPosition(x, y);
             tiles.get(i).draw(canvas);
@@ -85,7 +94,7 @@ public class RummySet {
 
         for (RummyTile tile : tiles) {
 
-                distances.add(Math.sqrt(Math.pow((tile.X + RummyTile.Width / 2) - xx, 2) + Math.pow((tile.Y + RummyTile.Height / 2) - yy, 2)));
+            distances.add(Math.sqrt(Math.pow((tile.X + RummyTile.Width / 2) - xx, 2) + Math.pow((tile.Y + RummyTile.Height / 2) - yy, 2)));
             //if (tile.collides(xx, yy)) {
             //    return tile;
             //}
@@ -137,13 +146,23 @@ public class RummySet {
         }
     }
 
-    public boolean dropTile(RummyTile tile, Point pos) {
+    public void dropTile(RummyTile tile, Point pos) {
         RummyTile tl = collideWithTile(pos.X, pos.Y);
         if (tl != null) {
-            addTile(tiles.indexOf(tl), tile);
-            return true;
+            if (tile == null) {
+                EmptyTileIndex = tiles.indexOf(tl);
+            } else
+                addTile(tiles.indexOf(tl), tile);
+            return;
         }
-        return false;
+
+        if (tile == null) {
+            EmptyTileIndex = tiles.size() - 1;
+        } else
+            addTile(tile);
+
+
+        return;
     }
 
     public float getHeight(float width) {

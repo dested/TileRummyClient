@@ -19,7 +19,6 @@ public class RummyTile {
     public PaintBucket Bucket;
     public boolean highlighted;
     public boolean longPressed;
-    public int dummy; 
 
     public RummyTile(int i, TileColor red) {
 
@@ -27,8 +26,6 @@ public class RummyTile {
         color = red;
     }
 
-    public RummyTile(boolean b) {       dummy=1;
-    }
 
     public void setBucket(PaintBucket bucket) {
 
@@ -45,12 +42,6 @@ public class RummyTile {
 
         Paint paint;
         tileLoc = new Rectangle(X, Y, Width, Height).toRectF();
-        if(dummy==1){
-            paint=Bucket.GetPaint("outerTileLongPressed");
-
-            canvas.drawRoundRect(tileLoc, 3, 3, paint);
-            return;
-        }       else if (dummy==2)return ;
 
 
          if (highlighted) {
